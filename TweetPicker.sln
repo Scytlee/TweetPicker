@@ -4,6 +4,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{5FDA5DA5-F27
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TweetPicker.Service", "src\TweetPicker.Service\TweetPicker.Service.csproj", "{3EE6577B-4630-4301-A886-3D19FFF513EA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TweetPicker.Library", "src\TweetPicker.Library\TweetPicker.Library.csproj", "{119F8128-03DD-4217-A1D9-109D75EF47AD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -14,8 +16,13 @@ Global
 		{3EE6577B-4630-4301-A886-3D19FFF513EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3EE6577B-4630-4301-A886-3D19FFF513EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3EE6577B-4630-4301-A886-3D19FFF513EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{119F8128-03DD-4217-A1D9-109D75EF47AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{119F8128-03DD-4217-A1D9-109D75EF47AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{119F8128-03DD-4217-A1D9-109D75EF47AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{119F8128-03DD-4217-A1D9-109D75EF47AD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{3EE6577B-4630-4301-A886-3D19FFF513EA} = {5FDA5DA5-F27E-47F3-BC5C-0B6119EEAAFF}
+		{119F8128-03DD-4217-A1D9-109D75EF47AD} = {5FDA5DA5-F27E-47F3-BC5C-0B6119EEAAFF}
 	EndGlobalSection
 EndGlobal
