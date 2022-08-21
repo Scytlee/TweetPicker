@@ -1,0 +1,21 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{5FDA5DA5-F27E-47F3-BC5C-0B6119EEAAFF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TweetPicker.Service", "src\TweetPicker.Service\TweetPicker.Service.csproj", "{3EE6577B-4630-4301-A886-3D19FFF513EA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3EE6577B-4630-4301-A886-3D19FFF513EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3EE6577B-4630-4301-A886-3D19FFF513EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3EE6577B-4630-4301-A886-3D19FFF513EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3EE6577B-4630-4301-A886-3D19FFF513EA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3EE6577B-4630-4301-A886-3D19FFF513EA} = {5FDA5DA5-F27E-47F3-BC5C-0B6119EEAAFF}
+	EndGlobalSection
+EndGlobal
