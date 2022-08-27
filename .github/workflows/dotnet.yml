@@ -33,5 +33,6 @@ jobs:
     - name: Push image
       run: |
         docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+        cd build/service
         docker-compose build --no-cache
         docker-compose push
