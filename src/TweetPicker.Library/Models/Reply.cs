@@ -10,6 +10,11 @@ public class Reply
   public long GiveawayTweetId { get; set; }
   public DateTime RepliedAt { get; set; }
 
+  private Reply()
+  {
+    // needed by Dapper
+  }
+  
   public Reply(long id, long userId, long giveawayTweetId, DateTime repliedAt, string text = "")
   {
     Id = id;

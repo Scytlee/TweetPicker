@@ -11,7 +11,7 @@ public class UsersDataAccess : DataAccess
   {
   }
 
-  public async Task<User?> GetUser(long userId)
+  public async Task<User?> GetUserAsync(long userId)
   {
     const string query = "SELECT * FROM [dbo].[Users] WHERE [Id] = @userId";
 
@@ -20,7 +20,7 @@ public class UsersDataAccess : DataAccess
     return output;
   }
 
-  public async Task InsertUser(User user)
+  public async Task InsertUserAsync(User user)
   {
     const string query = "INSERT INTO [dbo].[Users] (Id, Username) VALUES (@Id, @Username)";
 
@@ -28,7 +28,7 @@ public class UsersDataAccess : DataAccess
     await connection.ExecuteAsync(query, user);
   }
 
-  public async Task UpdateUser(User user)
+  public async Task UpdateUserAsync(User user)
   {
     const string query = "UPDATE [dbo].[Users] SET [Username] = @Username WHERE [Id] = @Id";
 

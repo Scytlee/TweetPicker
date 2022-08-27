@@ -12,7 +12,7 @@ public class RepliesDataAccess : DataAccess
   {
   }
 
-  public async Task<Reply?> GetFirstReplyToGiveawaySince(long giveawayTweetId, DateTime sinceDate)
+  public async Task<Reply?> GetFirstReplyToGiveawaySinceAsync(long giveawayTweetId, DateTime sinceDate)
   {
     const string query = "SELECT TOP 1 * FROM [dbo].[Replies] WHERE [GiveawayTweetId] = @giveawayTweetId AND [RepliedAt] >= @repliedAt ORDER BY [Id]";
 
@@ -21,7 +21,7 @@ public class RepliesDataAccess : DataAccess
     return output;
   }
 
-  public async Task<Reply?> GetLatestReply(long giveawayTweetId, long userId)
+  public async Task<Reply?> GetLatestReplyAsync(long giveawayTweetId, long userId)
   {
     const string query = "SELECT TOP 1 * FROM [dbo].[Replies] WHERE [GiveawayTweetId] = @giveawayTweetId AND [UserId] = @userId ORDER BY [RepliedAt] DESC";
 
@@ -30,7 +30,7 @@ public class RepliesDataAccess : DataAccess
     return output;
   }
 
-  public async Task<bool> ExistsReply(long replyId)
+  public async Task<bool> ExistsReplyAsync(long replyId)
   {
     const string query = "SELECT TOP 1 1 FROM [dbo].[Replies] WHERE [Id] = @replyId";
 
@@ -39,7 +39,7 @@ public class RepliesDataAccess : DataAccess
     return output == 1;
   }
 
-  public async Task<bool> ExistsReply(long giveawayTweetId, long userId)
+  public async Task<bool> ExistsReplyAsync(long giveawayTweetId, long userId)
   {
     const string query = "SELECT TOP 1 1 FROM [dbo].[Replies] WHERE [GiveawayTweetId] = @giveawayTweetId AND [UserId] = @userId";
 
@@ -48,7 +48,7 @@ public class RepliesDataAccess : DataAccess
     return output == 1;
   }
 
-  public async Task InsertReply(Reply reply)
+  public async Task InsertReplyAsync(Reply reply)
   {
     const string query = "INSERT INTO [dbo].[Replies] (Id, UserId, Text, GiveawayTweetId, RepliedAt) VALUES (@Id, @UserId, @Text, @GiveawayTweetId, @RepliedAt)";
 

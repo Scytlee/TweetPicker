@@ -11,7 +11,7 @@ public class RetweetsDataAccess : DataAccess
   {
   }
 
-  public async Task<Retweet?> GetLatestRetweet(long giveawayTweetId, long userId)
+  public async Task<Retweet?> GetLatestRetweetAsync(long giveawayTweetId, long userId)
   {
     const string query = "SELECT TOP 1 * FROM [dbo].[Retweets] WHERE [GiveawayTweetId] = @giveawayTweetId AND [UserId] = @userId ORDER BY [Id] DESC";
 
@@ -20,7 +20,7 @@ public class RetweetsDataAccess : DataAccess
     return output;
   }
 
-  public async Task<bool> ExistsRetweet(long retweetId)
+  public async Task<bool> ExistsRetweetAsync(long retweetId)
   {
     const string query = "SELECT TOP 1 1 FROM [dbo].[Retweets] WHERE [Id] = @retweetId";
 
@@ -29,7 +29,7 @@ public class RetweetsDataAccess : DataAccess
     return output == 1;
   }
 
-  public async Task InsertRetweet(Retweet retweet)
+  public async Task InsertRetweetAsync(Retweet retweet)
   {
     const string query = "INSERT INTO [dbo].[Retweets] (Id, UserId, GiveawayTweetId, RetweetedAt) VALUES (@Id, @UserId, @GiveawayTweetId, @RetweetedAt)";
 

@@ -11,7 +11,7 @@ public class GiveawayEntriesDataAccess : DataAccess
   {
   }
 
-  public async Task<GiveawayEntry?> GetGiveawayEntry(long giveawayTweetId, long userId)
+  public async Task<GiveawayEntry?> GetGiveawayEntryAsync(long giveawayTweetId, long userId)
   {
     const string query = "SELECT TOP 1 * FROM [dbo].[GiveawayEntries] WHERE [GiveawayTweetId] = @giveawayTweetId AND [UserId] = @userId";
 
@@ -20,7 +20,7 @@ public class GiveawayEntriesDataAccess : DataAccess
     return output;
   }
 
-  public async Task<bool> ExistsGiveawayEntry(long giveawayTweetId, long userId)
+  public async Task<bool> ExistsGiveawayEntryAsync(long giveawayTweetId, long userId)
   {
     const string query = "SELECT TOP 1 1 FROM [dbo].[GiveawayEntries] WHERE [GiveawayTweetId] = @giveawayTweetId AND [UserId] = @userId";
 
@@ -29,7 +29,7 @@ public class GiveawayEntriesDataAccess : DataAccess
     return output == 1;
   }
 
-  public async Task InsertGiveawayEntry(GiveawayEntry giveawayEntry)
+  public async Task InsertGiveawayEntryAsync(GiveawayEntry giveawayEntry)
   {
     const string query = "INSERT INTO [dbo].[GiveawayEntries] (GiveawayTweetId, UserId, RetweetId, ReplyId) VALUES (@GiveawayTweetId, @UserId, @RetweetId, @ReplyId)";
 
@@ -37,7 +37,7 @@ public class GiveawayEntriesDataAccess : DataAccess
     await connection.ExecuteAsync(query, giveawayEntry);
   }
 
-  public async Task UpdateGiveawayEntry(GiveawayEntry giveawayEntry)
+  public async Task UpdateGiveawayEntryAsync(GiveawayEntry giveawayEntry)
   {
     const string query = "UPDATE [dbo].[GiveawayEntries] SET [RetweetId] = @RetweetId, [ReplyId] = @ReplyId WHERE [GiveawayTweetId] = @GiveawayTweetId AND [UserId] = @UserId";
 

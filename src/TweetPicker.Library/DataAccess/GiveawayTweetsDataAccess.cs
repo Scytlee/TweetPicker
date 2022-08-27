@@ -12,7 +12,7 @@ public class GiveawayTweetsDataAccess : DataAccess
   {
   }
 
-  public async Task<IEnumerable<GiveawayTweet>> GetOpenGiveawayTweets()
+  public async Task<IEnumerable<GiveawayTweet>> GetOpenGiveawayTweetsAsync()
   {
     const string query = "SELECT * FROM [dbo].[GiveawayTweets] WHERE [Closed] = 0";
 
