@@ -1,0 +1,11 @@
+version: "3.8"
+
+services:
+  tweetpicker-service:
+    build:
+      context: ../../
+      dockerfile: build/service/Dockerfile
+    ports:
+      - "5000:80"
+    container_name: tweetpicker_service
+    image: scytlee/scytlee:tweetpicker-service
