@@ -44,17 +44,24 @@ jobs:
     steps:
     - name: Restore dependencies
       uses: actions/checkout@v3
-    - name: Deploy
+    - name: Install SSH client
       run: |
         apk add openssh-client
         eval $(ssh-agent -s)
+    - name: Add SSH key
+      run: |
         echo "${{ secrets.SSH_PRIVATE_KEY }}" | tr -d '\r' | ssh-add -
         mkdir -p ~/.ssh
         chmod 700 ~/.ssh
-        scp -P ${{ secrets.SSH_PORT }} -o StrictHostKeyChecking=no build/service/docker-compose.yml ${{ secrets.SSH_USER }}@${{ secrets.HOST_ADDRESS }}:${{ secrets.HOST_PATH }}/docker-compose.yml
+    - name: Send docker-compose file
+      run: scp -P ${{ secrets.SSH_PORT }} -o StrictHostKeyChecking=no build/service/docker-compose.yml ${{ secrets.SSH_USER }}@${{ secrets.HOST_ADDRESS }}:${{ secrets.HOST_PATH }}/docker-compose.yml
+    - name: Export environment variables
+      run: |
         ssh -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.HOST_ADDRESS }} "export TWEETPICKER_DATABASE=${{ secrets.TWEETPICKER_DATABASE }}"
         ssh -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.HOST_ADDRESS }} "export TWITTER_CONSUMERKEY=${{ secrets.TWITTER_CONSUMERKEY }}"
         ssh -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.HOST_ADDRESS }} "export TWITTER_CONSUMERSECRET=${{ secrets.TWITTER_CONSUMERSECRET }}"
         ssh -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.HOST_ADDRESS }} "export TWITTER_ACCESSTOKEN=${{ secrets.TWITTER_ACCESSTOKEN }}"
         ssh -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.HOST_ADDRESS }} "export TWITTER_ACCESSSECRET=${{ secrets.TWITTER_ACCESSSECRET }}"
+    - name: Deploy
+      run: |
         ssh -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.HOST_ADDRESS }} "cd ${{ secrets.HOST_PATH }} && ./staging.sh"
