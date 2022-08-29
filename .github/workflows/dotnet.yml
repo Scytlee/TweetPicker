@@ -33,5 +33,19 @@ jobs:
     - name: Push image
       run: |
         docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+        cd build/service
         docker-compose build --no-cache
         docker-compose push
+    - name: Deploy
+      run: |
+        apk add openssh-client
+        eval $(ssh-agent -s)
+        echo ${{ secrets.SSH_PRIVATE_KEY }} | ssh-add -
+        mkdir -p ~/.ssh
+        chmod 700 ~/.ssh
+        scp -P ${{ secrets.SSH_PORT }} build/service/docker-compose.yml ${{ secrets.SSH_USER }}@${{ secrets.HOST_ADDRESS }}:${{ secrets.HOST_PATH }}/docker-compose.yml
+        ssh -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.HOST_ADDRESS }} "export TWEETPICKER_DATABASE=${{ secrets.TWEETPICKER_DATABASE }}"
+        ssh -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.HOST_ADDRESS }} "export TWITTER_CONSUMERKEY=${{ secrets.TWITTER_CONSUMERKEY }}"
+        ssh -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.HOST_ADDRESS }} "export TWITTER_CONSUMERSECRET=${{ secrets.TWITTER_CONSUMERSECRET }}"
+        ssh -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.HOST_ADDRESS }} "export TWITTER_ACCESSTOKEN=${{ secrets.TWITTER_ACCESSTOKEN }}"
+        ssh -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.HOST_ADDRESS }} "export TWITTER_ACCESSSECRET=${{ secrets.TWITTER_ACCESSSECRET }}"
