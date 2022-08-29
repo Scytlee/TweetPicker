@@ -5,6 +5,12 @@ services:
     build:
       context: ../../
       dockerfile: build/service/Dockerfile
+    environment:
+      - ConnectionStrings__Database=$TWEETPICKER_DATABASE
+      - Twitter__ConsumerKey=$TWITTER_CONSUMERKEY
+      - Twitter__ConsumerSecret=$TWITTER_CONSUMERSECRET
+      - Twitter__AccessToken=$TWITTER_ACCESSTOKEN
+      - Twitter__AccessSecret=$TWITTER_ACCESSSECRET
     ports:
       - "5000:80"
     container_name: tweetpicker_service
