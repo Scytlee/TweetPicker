@@ -56,11 +56,18 @@ jobs:
         strip_components: 2
     - name: Deploy
       uses: appleboy/ssh-action@master
+      env:
+        TWEETPICKER_DATABASE: ${{ secrets.TWEETPICKER_DATABASE }}
+        TWITTER_ACCESSTOKEN: ${{ secrets.TWITTER_ACCESSTOKEN }}
+        TWITTER_ACCESSSECRET: ${{ secrets.TWITTER_ACCESSSECRET }}
+        TWITTER_CONSUMERKEY: ${{ secrets.TWITTER_CONSUMERKEY }}
+        TWITTER_CONSUMERSECRET: ${{ secrets.TWITTER_CONSUMERSECRET }}
       with:
         host: ${{ secrets.HOST_ADDRESS }}
         username: ${{ secrets.SSH_USER }}
         port: ${{ secrets.SSH_PORT }}
         key: ${{ secrets.SSH_PRIVATE_KEY }}
+        envs: TWEETPICKER_DATABASE, TWITTER_ACCESSTOKEN, TWITTER_ACCESSSECRET, TWITTER_CONSUMERKEY, TWITTER_CONSUMERSECRET
         script: |
           cd ${{ secrets.HOST_PATH }}
           ./staging.sh
