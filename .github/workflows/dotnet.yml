@@ -46,11 +46,9 @@ jobs:
       uses: actions/checkout@v3
     - name: Setup SSH
       run: |
-        apk add openssh-client
-        eval $(ssh-agent -s)
-        echo "${{ secrets.SSH_PRIVATE_KEY }}" | tr -d '\r' | ssh-add -
-        mkdir -p ~/.ssh
-        chmod 700 ~/.ssh
+        install -m 600 -D /dev/null ~/.ssh/id_rsa
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+        ssh-keyscan -H ${{ secrets.HOST_ADDRESS }} > ~/.ssh/known_hosts
     - name: Send docker-compose file
       run: scp -P ${{ secrets.SSH_PORT }} -o StrictHostKeyChecking=no build/service/docker-compose.yml ${{ secrets.SSH_USER }}@${{ secrets.HOST_ADDRESS }}:${{ secrets.HOST_PATH }}/docker-compose.yml
     - name: Export environment variables
