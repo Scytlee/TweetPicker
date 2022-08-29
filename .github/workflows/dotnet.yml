@@ -46,7 +46,7 @@ jobs:
       run: |
         apk add openssh-client
         eval $(ssh-agent -s)
-        echo ${{ secrets.SSH_PRIVATE_KEY }} | ssh-add -
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" | ssh-add -
         mkdir -p ~/.ssh
         chmod 700 ~/.ssh
         scp -P ${{ secrets.SSH_PORT }} build/service/docker-compose.yml ${{ secrets.SSH_USER }}@${{ secrets.HOST_ADDRESS }}:${{ secrets.HOST_PATH }}/docker-compose.yml
