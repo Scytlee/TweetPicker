@@ -7,10 +7,9 @@ on:
     branches: [ "master" ]
 
 jobs:
-  build:
-
+  prepare_image:
+    name: Prepare image
     runs-on: ubuntu-latest
-
     steps:
     - name: Restore dependencies
       uses: actions/checkout@v3
@@ -36,6 +35,13 @@ jobs:
         cd build/service
         docker-compose build --no-cache
         docker-compose push
+
+  deploy:
+    name: Deploy
+    needs: prepare_image
+    runs-on: ubuntu-latest
+    container: alpine
+    steps:
     - name: Deploy
       run: |
         apk add openssh-client
