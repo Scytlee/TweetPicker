@@ -44,20 +44,35 @@ jobs:
     steps:
     - name: Restore dependencies
       uses: actions/checkout@v3
-    - name: Setup SSH
-      run: |
-        install -m 600 -D /dev/null ~/.ssh/id_rsa
-        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-        ssh-keyscan -H ${{ secrets.HOST_ADDRESS }} > ~/.ssh/known_hosts
     - name: Send docker-compose file
-      run: scp -P ${{ secrets.SSH_PORT }} -o StrictHostKeyChecking=no build/service/docker-compose.yml ${{ secrets.SSH_USER }}@${{ secrets.HOST_ADDRESS }}:${{ secrets.HOST_PATH }}/docker-compose.yml
+      uses: appleboy/scp-action@master
+      with:
+        host: ${{ secrets.HOST_ADDRESS }}
+        username: ${{ secrets.SSH_USER }}
+        port: ${{ secrets.SSH_PORT }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        source: "build/service/docker-compose.yml"
+        target: "${{ secrets.HOST_PATH }}/docker-compose.yml"
     - name: Export environment variables
-      run: |
-        ssh -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.HOST_ADDRESS }} "export TWEETPICKER_DATABASE=${{ secrets.TWEETPICKER_DATABASE }}"
-        ssh -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.HOST_ADDRESS }} "export TWITTER_CONSUMERKEY=${{ secrets.TWITTER_CONSUMERKEY }}"
-        ssh -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.HOST_ADDRESS }} "export TWITTER_CONSUMERSECRET=${{ secrets.TWITTER_CONSUMERSECRET }}"
-        ssh -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.HOST_ADDRESS }} "export TWITTER_ACCESSTOKEN=${{ secrets.TWITTER_ACCESSTOKEN }}"
-        ssh -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.HOST_ADDRESS }} "export TWITTER_ACCESSSECRET=${{ secrets.TWITTER_ACCESSSECRET }}"
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST_ADDRESS }}
+        username: ${{ secrets.SSH_USER }}
+        port: ${{ secrets.SSH_PORT }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        script: |
+          export TWEETPICKER_DATABASE=${{ secrets.TWEETPICKER_DATABASE }}
+          export TWITTER_CONSUMERKEY=${{ secrets.TWITTER_CONSUMERKEY }}
+          export TWITTER_CONSUMERSECRET=${{ secrets.TWITTER_CONSUMERSECRET }}
+          export TWITTER_ACCESSTOKEN=${{ secrets.TWITTER_ACCESSTOKEN }}
+          export TWITTER_ACCESSSECRET=${{ secrets.TWITTER_ACCESSSECRET }}
     - name: Deploy
-      run: |
-        ssh -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.HOST_ADDRESS }} "cd ${{ secrets.HOST_PATH }} && ./staging.sh"
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST_ADDRESS }}
+        username: ${{ secrets.SSH_USER }}
+        port: ${{ secrets.SSH_PORT }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        script: |
+          cd ${{ secrets.HOST_PATH }}
+          ./staging.sh
