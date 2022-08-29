@@ -62,11 +62,11 @@ jobs:
         port: ${{ secrets.SSH_PORT }}
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         script: |
-          export TWEETPICKER_DATABASE="${{ secrets.TWEETPICKER_DATABASE }}"
-          export TWITTER_CONSUMERKEY="${{ secrets.TWITTER_CONSUMERKEY }}"
-          export TWITTER_CONSUMERSECRET="${{ secrets.TWITTER_CONSUMERSECRET }}"
-          export TWITTER_ACCESSTOKEN="${{ secrets.TWITTER_ACCESSTOKEN }}"
-          export TWITTER_ACCESSSECRET="${{ secrets.TWITTER_ACCESSSECRET }}"
+          export TWEETPICKER_DATABASE='${{ secrets.TWEETPICKER_DATABASE }}'
+          export TWITTER_CONSUMERKEY='${{ secrets.TWITTER_CONSUMERKEY }}'
+          export TWITTER_CONSUMERSECRET='${{ secrets.TWITTER_CONSUMERSECRET }}'
+          export TWITTER_ACCESSTOKEN='${{ secrets.TWITTER_ACCESSTOKEN }}'
+          export TWITTER_ACCESSSECRET='${{ secrets.TWITTER_ACCESSSECRET }}'
     - name: Deploy
       uses: appleboy/ssh-action@master
       with:
