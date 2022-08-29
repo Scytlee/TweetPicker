@@ -52,7 +52,8 @@ jobs:
         port: ${{ secrets.SSH_PORT }}
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         source: "build/service/docker-compose.yml"
-        target: "${{ secrets.HOST_PATH }}/docker-compose.yml"
+        target: "${{ secrets.HOST_PATH }}"
+        strip_components: 2
     - name: Export environment variables
       uses: appleboy/ssh-action@master
       with:
